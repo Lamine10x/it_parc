@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_equipment_fiche">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Fiche Équipement</h2>
+                        <h3><t t-esc="doc.name"/> — <t t-esc="doc.reference"/></h3>
+                        <hr/>
+
+                        <!-- Informations générales -->
+                        <h4>Informations générales</h4>
+                        <table class="table table-bordered table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Catégorie</strong></td>
+                                    <td><t t-esc="doc.category_id.name"/></td>
+                                    <td><strong>Marque / Modèle</strong></td>
+                                    <td><t t-esc="doc.brand"/> <t t-esc="doc.model_name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Numéro de série</strong></td>
+                                    <td><t t-esc="doc.serial_number"/></td>
+                                    <td><strong>Localisation</strong></td>
+                                    <td><t t-esc="doc.location"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date d'achat</strong></td>
+                                    <td><t t-esc="doc.purchase_date"/></td>
+                                    <td><strong>Valeur d'achat</strong></td>
+                                    <td><t t-esc="doc.purchase_value"/> FCFA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fin de garantie</strong></td>
+                                    <td>
+                                        <t t-esc="doc.warranty_date"/>
+                                        <t t-if="doc.warranty_expired">
+                                            <span class="text-danger"> (EXPIRÉE)</span>
+                                        </t>
+                                    </td>
+                                    <td><strong>État</strong></td>
+                                    <td><t t-esc="dict(doc._fields['state'].selection).get(doc.state)"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Affectation courante -->
+                        <h4>Affectation courante</h4>
+                        <table class="table table-bordered table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Employé</strong></td>
+                                    <td><t t-esc="doc.employee_id.name or '—'"/></td>
+                                    <td><strong>Département</strong></td>
+                                    <td><t t-esc="doc.department_id.name or '—'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Historique des interventions -->
+                        <t t-if="doc.intervention_ids">
+                            <h4>Historique des interventions</h4>
+                            <table class="table table-bordered table-sm">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>Référence</th>
+                                        <th>Type</th>
+                                        <th>Technicien</th>
+                                        <th>Début</th>
+                                        <th>Fin</th>
+                                        <th>Durée (h)</th>
+                                        <th>Coût (FCFA)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.intervention_ids" t-as="interv">
+                                        <tr>
+                                            <td><t t-esc="interv.name"/></td>
+                                            <td><t t-esc="interv.type"/></td>
+                                            <td><t t-esc="interv.technician_id.name or '—'"/></td>
+                                            <td><t t-esc="interv.date_start"/></td>
+                                            <td><t t-esc="interv.date_end or '—'"/></td>
+                                            <td><t t-esc="'%.1f' % interv.duration"/></td>
+                                            <td><t t-esc="'%d' % interv.cost"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6"><strong>Coût total</strong></td>
+                                        <td><strong><t t-esc="'%d' % sum(doc.intervention_ids.mapped('cost'))"/> FCFA</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </t>
+
+                        <p class="text-muted text-right" style="font-size:10px;">
+                            Rapport généré le <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/> — TECHPARK CI
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

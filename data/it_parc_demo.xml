@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==========================================
+         CATÉGORIES D'ÉQUIPEMENTS
+    ========================================== -->
+    <record id="cat_poste" model="it.equipment.category">
+        <field name="name">Poste de travail</field>
+        <field name="description">PC fixe, laptop, tout-en-un</field>
+    </record>
+    <record id="cat_serveur" model="it.equipment.category">
+        <field name="name">Serveur</field>
+        <field name="description">Serveurs physiques et virtuels</field>
+    </record>
+    <record id="cat_reseau" model="it.equipment.category">
+        <field name="name">Équipement réseau</field>
+        <field name="description">Switch, routeur, pare-feu</field>
+    </record>
+    <record id="cat_imprimante" model="it.equipment.category">
+        <field name="name">Imprimante</field>
+        <field name="description">Imprimantes et multifonctions</field>
+    </record>
+    <record id="cat_telephone" model="it.equipment.category">
+        <field name="name">Téléphone IP</field>
+        <field name="description">Postes téléphoniques VoIP</field>
+    </record>
+
+    <!-- ==========================================
+         ÉQUIPEMENTS (10 minimum)
+    ========================================== -->
+    <record id="eq_laptop_01" model="it.equipment">
+        <field name="name">Laptop Dell Latitude 5540</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="brand">Dell</field>
+        <field name="model_name">Latitude 5540</field>
+        <field name="serial_number">SN-DELL-001</field>
+        <field name="location">Abidjan — Cocody, Bureau 12</field>
+        <field name="purchase_date">2023-03-15</field>
+        <field name="purchase_value">850000</field>
+        <field name="warranty_date">2026-03-15</field>
+        <field name="state">assigned</field>
+        <field name="description">Core i7, 16 Go RAM, SSD 512 Go, Windows 11 Pro</field>
+    </record>
+
+    <record id="eq_laptop_02" model="it.equipment">
+        <field name="name">Laptop HP EliteBook 840</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="brand">HP</field>
+        <field name="model_name">EliteBook 840 G9</field>
+        <field name="serial_number">SN-HP-002</field>
+        <field name="location">Abidjan — Cocody, Bureau 8</field>
+        <field name="purchase_date">2022-07-20</field>
+        <field name="purchase_value">780000</field>
+        <field name="warranty_date">2025-07-20</field>
+        <field name="state">assigned</field>
+        <field name="description">Core i5, 8 Go RAM, SSD 256 Go</field>
+    </record>
+
+    <record id="eq_laptop_03" model="it.equipment">
+        <field name="name">Laptop Lenovo ThinkPad X1</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="brand">Lenovo</field>
+        <field name="model_name">ThinkPad X1 Carbon</field>
+        <field name="serial_number">SN-LEN-003</field>
+        <field name="location">Bouaké — Antenne</field>
+        <field name="purchase_date">2021-11-10</field>
+        <field name="purchase_value">920000</field>
+        <field name="warranty_date">2024-11-10</field>
+        <field name="state">maintenance</field>
+        <field name="description">Core i7, 16 Go RAM, SSD 512 Go — batterie défectueuse</field>
+    </record>
+
+    <record id="eq_serveur_01" model="it.equipment">
+        <field name="name">Serveur Dell PowerEdge R740</field>
+        <field name="category_id" ref="cat_serveur"/>
+        <field name="brand">Dell</field>
+        <field name="model_name">PowerEdge R740</field>
+        <field name="serial_number">SN-SRV-001</field>
+        <field name="location">Abidjan — Salle serveurs</field>
+        <field name="purchase_date">2022-01-05</field>
+        <field name="purchase_value">4500000</field>
+        <field name="warranty_date">2027-01-05</field>
+        <field name="state">assigned</field>
+        <field name="description">2x Xeon Gold, 128 Go RAM, RAID 10 — serveur ERP</field>
+    </record>
+
+    <record id="eq_serveur_02" model="it.equipment">
+        <field name="name">Serveur HP ProLiant DL380</field>
+        <field name="category_id" ref="cat_serveur"/>
+        <field name="brand">HP</field>
+        <field name="model_name">ProLiant DL380 Gen10</field>
+        <field name="serial_number">SN-SRV-002</field>
+        <field name="location">Abidjan — Salle serveurs</field>
+        <field name="purchase_date">2020-06-12</field>
+        <field name="purchase_value">3800000</field>
+        <field name="warranty_date">2023-06-12</field>
+        <field name="state">assigned</field>
+        <field name="description">Xeon Silver, 64 Go RAM — serveur de fichiers (garantie expirée)</field>
+    </record>
+
+    <record id="eq_switch_01" model="it.equipment">
+        <field name="name">Switch Cisco Catalyst 2960</field>
+        <field name="category_id" ref="cat_reseau"/>
+        <field name="brand">Cisco</field>
+        <field name="model_name">Catalyst 2960-X</field>
+        <field name="serial_number">SN-NET-001</field>
+        <field name="location">Abidjan — Baie réseau</field>
+        <field name="purchase_date">2021-04-18</field>
+        <field name="purchase_value">650000</field>
+        <field name="warranty_date">2026-04-18</field>
+        <field name="state">assigned</field>
+        <field name="description">48 ports PoE, gestion VLAN</field>
+    </record>
+
+    <record id="eq_routeur_01" model="it.equipment">
+        <field name="name">Routeur Cisco ASR 1001</field>
+        <field name="category_id" ref="cat_reseau"/>
+        <field name="brand">Cisco</field>
+        <field name="model_name">ASR 1001-X</field>
+        <field name="serial_number">SN-NET-002</field>
+        <field name="location">Abidjan — Baie réseau</field>
+        <field name="purchase_date">2021-04-18</field>
+        <field name="purchase_value">1200000</field>
+        <field name="warranty_date">2024-04-18</field>
+        <field name="state">assigned</field>
+        <field name="description">Routeur principal, liaison opérateur</field>
+    </record>
+
+    <record id="eq_imprimante_01" model="it.equipment">
+        <field name="name">Imprimante HP LaserJet Pro M404</field>
+        <field name="category_id" ref="cat_imprimante"/>
+        <field name="brand">HP</field>
+        <field name="model_name">LaserJet Pro M404dn</field>
+        <field name="serial_number">SN-IMP-001</field>
+        <field name="location">Abidjan — Cocody, Open space</field>
+        <field name="purchase_date">2022-09-01</field>
+        <field name="purchase_value">220000</field>
+        <field name="warranty_date">2025-09-01</field>
+        <field name="state">assigned</field>
+        <field name="description">Laser monochrome, recto-verso automatique</field>
+    </record>
+
+    <record id="eq_telephone_01" model="it.equipment">
+        <field name="name">Téléphone IP Cisco 8841</field>
+        <field name="category_id" ref="cat_telephone"/>
+        <field name="brand">Cisco</field>
+        <field name="model_name">IP Phone 8841</field>
+        <field name="serial_number">SN-TEL-001</field>
+        <field name="location">Abidjan — Cocody, Direction</field>
+        <field name="purchase_date">2020-03-25</field>
+        <field name="purchase_value">85000</field>
+        <field name="warranty_date">2023-03-25</field>
+        <field name="state">assigned</field>
+        <field name="description">Téléphone VoIP couleur, poste Direction</field>
+    </record>
+
+    <record id="eq_retired_01" model="it.equipment">
+        <field name="name">PC Tour HP Compaq 8100</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="brand">HP</field>
+        <field name="model_name">Compaq 8100 Elite</field>
+        <field name="serial_number">SN-OLD-001</field>
+        <field name="location">Abidjan — Stockage</field>
+        <field name="purchase_date">2015-01-10</field>
+        <field name="purchase_value">320000</field>
+        <field name="warranty_date">2018-01-10</field>
+        <field name="state">retired</field>
+        <field name="description">Retiré du service — remplacé en 2023</field>
+    </record>
+
+    <!-- Partenaires fournisseurs -->
+    <record id="partner_dell_ci" model="res.partner">
+        <field name="name">Dell Technologies CI</field>
+        <field name="is_company">True</field>
+        <field name="city">Abidjan</field>
+    </record>
+    <record id="partner_cisco_ci" model="res.partner">
+        <field name="name">Cisco Systems CI</field>
+        <field name="is_company">True</field>
+        <field name="city">Abidjan</field>
+    </record>
+    <record id="partner_odoo_ci" model="res.partner">
+        <field name="name">Odoo SA — Partenaire CI</field>
+        <field name="is_company">True</field>
+        <field name="city">Abidjan</field>
+    </record>
+
+    <!-- ==========================================
+         CONTRATS FOURNISSEURS (3 minimum)
+    ========================================== -->
+    <record id="contrat_maintenance_dell" model="it.contrat">
+        <field name="name">Contrat maintenance Dell ProSupport</field>
+        <field name="reference">DELL-2024-001</field>
+        <field name="type">maintenance</field>
+        <field name="partner_id" ref="partner_dell_ci"/>
+        <field name="date_start">2024-01-01</field>
+        <field name="date_end">2026-12-31</field>
+        <field name="amount">1800000</field>
+        <field name="state">active</field>
+        <field name="description">Contrat ProSupport Next Business Day pour les serveurs Dell</field>
+        <field name="equipment_ids" eval="[(4, ref('eq_serveur_01')), (4, ref('eq_laptop_01'))]"/>
+    </record>
+
+    <record id="contrat_cisco_smartnet" model="it.contrat">
+        <field name="name">Contrat Cisco SmartNet</field>
+        <field name="reference">CISCO-2024-002</field>
+        <field name="type">support</field>
+        <field name="partner_id" ref="partner_cisco_ci"/>
+        <field name="date_start">2024-06-01</field>
+        <field name="date_end">2026-07-15</field>
+        <field name="amount">950000</field>
+        <field name="state">active</field>
+        <field name="description">SmartNet pour switch et routeur Cisco — TAC 24/7</field>
+        <field name="equipment_ids" eval="[(4, ref('eq_switch_01')), (4, ref('eq_routeur_01'))]"/>
+    </record>
+
+    <record id="contrat_licence_odoo" model="it.contrat">
+        <field name="name">Licence Odoo Enterprise 18</field>
+        <field name="reference">ODOO-2025-001</field>
+        <field name="type">license</field>
+        <field name="partner_id" ref="partner_odoo_ci"/>
+        <field name="date_start">2025-01-01</field>
+        <field name="date_end">2026-07-31</field>
+        <field name="amount">3500000</field>
+        <field name="state">active</field>
+        <field name="description">Licence Odoo Enterprise 18 — 25 utilisateurs</field>
+    </record>
+
+    <!-- ==========================================
+         INTERVENTIONS (5 minimum)
+    ========================================== -->
+    <record id="interv_01" model="it.intervention">
+        <field name="name">INT/2026/0001</field>
+        <field name="equipment_id" ref="eq_laptop_02"/>
+        <field name="type">corrective</field>
+        <field name="date_start">2026-03-10 09:00:00</field>
+        <field name="date_end">2026-03-10 11:30:00</field>
+        <field name="cost">45000</field>
+        <field name="state">done</field>
+        <field name="description">Écran qui ne s'allume plus au démarrage</field>
+        <field name="report">Remplacement du câble LCD. Problème résolu.</field>
+    </record>
+
+    <record id="interv_02" model="it.intervention">
+        <field name="name">INT/2026/0002</field>
+        <field name="equipment_id" ref="eq_serveur_02"/>
+        <field name="type">preventive</field>
+        <field name="date_start">2026-04-05 14:00:00</field>
+        <field name="date_end">2026-04-05 17:00:00</field>
+        <field name="cost">0</field>
+        <field name="state">done</field>
+        <field name="description">Maintenance préventive trimestrielle</field>
+        <field name="report">Nettoyage ventilateurs, vérification RAID, mise à jour firmware.</field>
+    </record>
+
+    <record id="interv_03" model="it.intervention">
+        <field name="name">INT/2026/0003</field>
+        <field name="equipment_id" ref="eq_laptop_03"/>
+        <field name="type">corrective</field>
+        <field name="date_start">2026-05-20 10:00:00</field>
+        <field name="date_end">2026-05-20 12:00:00</field>
+        <field name="cost">120000</field>
+        <field name="state">in_progress</field>
+        <field name="description">Batterie ne se charge plus — autonomie 0 minute</field>
+        <field name="report">Commande de remplacement en cours.</field>
+    </record>
+
+    <record id="interv_04" model="it.intervention">
+        <field name="name">INT/2026/0004</field>
+        <field name="equipment_id" ref="eq_imprimante_01"/>
+        <field name="type">corrective</field>
+        <field name="date_start">2026-04-22 08:00:00</field>
+        <field name="date_end">2026-04-22 09:30:00</field>
+        <field name="cost">18000</field>
+        <field name="state">done</field>
+        <field name="description">Bourrage papier répétitif dans le bac 2</field>
+        <field name="report">Nettoyage rouleaux d'entraînement, remplacement séparateur.</field>
+    </record>
+
+    <record id="interv_05" model="it.intervention">
+        <field name="name">INT/2026/0005</field>
+        <field name="equipment_id" ref="eq_serveur_01"/>
+        <field name="type">preventive</field>
+        <field name="date_start">2026-06-15 07:00:00</field>
+        <field name="cost">0</field>
+        <field name="state">planned</field>
+        <field name="description">Maintenance préventive semestrielle serveur ERP</field>
+        <field name="report"/>
+    </record>
+
+    <!-- ==========================================
+         ALERTES DE DÉMONSTRATION
+    ========================================== -->
+    <record id="alerte_demo_01" model="it.alerte">
+        <field name="name">Garantie expirante : Laptop HP EliteBook 840</field>
+        <field name="type">warranty</field>
+        <field name="equipment_id" ref="eq_laptop_02"/>
+        <field name="date_echeance">2025-07-20</field>
+        <field name="state">open</field>
+    </record>
+
+    <record id="alerte_demo_02" model="it.alerte">
+        <field name="name">Contrat expirant : Licence Odoo Enterprise 18</field>
+        <field name="type">contrat</field>
+        <field name="contrat_id" ref="contrat_licence_odoo"/>
+        <field name="date_echeance">2026-07-31</field>
+        <field name="state">open</field>
+    </record>
+</odoo>

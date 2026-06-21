@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_interventions">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">Rapport des Interventions</h2>
+                    <p class="text-center text-muted">TECHPARK CI — Édité le
+                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+                    <hr/>
+
+                    <!-- Résumé -->
+                    <div class="row mb-3">
+                        <div class="col-3 text-center border p-2">
+                            <strong>Total interventions</strong><br/>
+                            <span style="font-size:18px;"><t t-esc="len(docs)"/></span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>Coût total</strong><br/>
+                            <span style="font-size:18px;">
+                                <t t-esc="'%d' % sum(docs.mapped('cost'))"/> FCFA
+                            </span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>Durée totale</strong><br/>
+                            <span style="font-size:18px;">
+                                <t t-esc="'%.1f' % sum(docs.mapped('duration'))"/> h
+                            </span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>Terminées</strong><br/>
+                            <span style="font-size:18px;">
+                                <t t-esc="len(docs.filtered(lambda i: i.state == 'done'))"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tableau -->
+                    <table class="table table-bordered table-sm" style="font-size:9px;">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th>Référence</th>
+                                <th>Équipement</th>
+                                <th>Type</th>
+                                <th>Technicien</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Durée (h)</th>
+                                <th>Coût (FCFA)</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="interv">
+                                <tr>
+                                    <td><t t-esc="interv.name"/></td>
+                                    <td><t t-esc="interv.equipment_id.name"/></td>
+                                    <td><t t-esc="dict(interv._fields['type'].selection).get(interv.type)"/></td>
+                                    <td><t t-esc="interv.technician_id.name or '—'"/></td>
+                                    <td><t t-esc="interv.date_start"/></td>
+                                    <td><t t-esc="interv.date_end or '—'"/></td>
+                                    <td class="text-right"><t t-esc="'%.1f' % interv.duration"/></td>
+                                    <td class="text-right"><t t-esc="'%d' % interv.cost"/></td>
+                                    <td><t t-esc="dict(interv._fields['state'].selection).get(interv.state)"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6"><strong>Totaux</strong></td>
+                                <td class="text-right">
+                                    <strong><t t-esc="'%.1f' % sum(docs.mapped('duration'))"/> h</strong>
+                                </td>
+                                <td class="text-right">
+                                    <strong><t t-esc="'%d' % sum(docs.mapped('cost'))"/> FCFA</strong>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

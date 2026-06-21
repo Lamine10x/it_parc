@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_it_equipment_technicien,it.equipment technicien,model_it_equipment,group_it_technicien,1,0,0,0
+access_it_equipment_manager,it.equipment manager,model_it_equipment,group_it_manager,1,1,1,1
+access_it_equipment_category_technicien,it.equipment.category technicien,model_it_equipment_category,group_it_technicien,1,0,0,0
+access_it_equipment_category_manager,it.equipment.category manager,model_it_equipment_category,group_it_manager,1,1,1,1
+access_it_affectation_technicien,it.affectation technicien,model_it_affectation,group_it_technicien,1,0,0,0
+access_it_affectation_manager,it.affectation manager,model_it_affectation,group_it_manager,1,1,1,1
+access_it_intervention_technicien,it.intervention technicien,model_it_intervention,group_it_technicien,1,1,1,0
+access_it_intervention_manager,it.intervention manager,model_it_intervention,group_it_manager,1,1,1,1
+access_it_contrat_technicien,it.contrat technicien,model_it_contrat,group_it_technicien,1,0,0,0
+access_it_contrat_manager,it.contrat manager,model_it_contrat,group_it_manager,1,1,1,1
+access_it_alerte_technicien,it.alerte technicien,model_it_alerte,group_it_technicien,1,0,0,0
+access_it_alerte_manager,it.alerte manager,model_it_alerte,group_it_manager,1,1,1,1
+access_it_dashboard_technicien,it.dashboard technicien,model_it_dashboard,group_it_technicien,1,0,0,0
+access_it_dashboard_manager,it.dashboard manager,model_it_dashboard,group_it_manager,1,1,1,1
+access_wizard_reaffectation_manager,wizard.reaffectation manager,model_wizard_reaffectation,group_it_manager,1,1,1,1
+access_wizard_renouvellement_manager,wizard.renouvellement manager,model_wizard_renouvellement,group_it_manager,1,1,1,1
+access_wizard_scan_alertes_manager,wizard.scan.alertes manager,model_wizard_scan_alertes,group_it_manager,1,1,1,1
+access_wizard_import_csv_manager,wizard.import.csv manager,model_wizard_import_csv,group_it_manager,1,1,1,1
+access_wizard_scan_alertes_line_manager,wizard.scan.alertes.line manager,model_wizard_scan_alertes_line,group_it_manager,1,1,1,1
+access_wizard_import_csv_line_manager,wizard.import.csv.line manager,model_wizard_import_csv_line,group_it_manager,1,1,1,1

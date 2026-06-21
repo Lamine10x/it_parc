@@ -1,0 +1,57 @@
+{
+    'name': 'IT Parc - Gestion de parc informatique',
+    'version': '18.0.1.0.0',
+    'category': 'IT',
+    'summary': 'Gestion du parc informatique interne — TECHPARK CI',
+    'description': """
+        Module de gestion du parc informatique pour TECHPARK CI.
+        Equipements, affectations, interventions, contrats fournisseurs,
+        alertes automatiques, imports CSV, rapports PDF, exports Excel et dashboard OWL.
+    """,
+    'author': 'TECHPARK CI',
+    'website': '',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'mail',
+        'hr',
+        'stock',
+        'purchase',
+        'account',
+        'maintenance',
+        'contacts',
+        'web',
+    ],
+    'data': [
+        'security/it_parc_security.xml',
+        'security/ir.model.access.csv',
+        'data/it_parc_cron.xml',
+        'views/it_equipment_views.xml',
+        'views/it_affectation_views.xml',
+        'views/it_intervention_views.xml',
+        'views/it_contrat_views.xml',
+        'views/it_alerte_views.xml',
+        'wizards/wizard_reaffectation_views.xml',
+        'wizards/wizard_renouvellement_views.xml',
+        'wizards/wizard_scan_alertes_views.xml',
+        'wizards/wizard_import_csv_views.xml',
+        'report/report_actions.xml',
+        'report/report_equipment_fiche.xml',
+        'report/report_inventaire.xml',
+        'report/report_interventions.xml',
+        'views/menus.xml',
+    ],
+    'demo': [
+        'data/it_parc_demo.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'it_parc/static/src/css/dashboard.css',
+            'it_parc/static/src/xml/dashboard.xml',
+            'it_parc/static/src/js/dashboard.js',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

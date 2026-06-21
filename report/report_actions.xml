@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action rapport fiche équipement -->
+    <record id="action_report_equipment_fiche" model="ir.actions.report">
+        <field name="name">Fiche équipement</field>
+        <field name="model">it.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_equipment_fiche</field>
+        <field name="report_file">it_parc.report_equipment_fiche</field>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Action rapport inventaire -->
+    <record id="action_report_inventaire" model="ir.actions.report">
+        <field name="name">Inventaire du parc</field>
+        <field name="model">it.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_inventaire</field>
+        <field name="report_file">it_parc.report_inventaire</field>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Action rapport interventions -->
+    <record id="action_report_interventions" model="ir.actions.report">
+        <field name="name">Historique des interventions</field>
+        <field name="model">it.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_interventions</field>
+        <field name="report_file">it_parc.report_interventions</field>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Action dashboard -->
+    <record id="action_it_dashboard" model="ir.actions.client">
+        <field name="name">Tableau de bord IT</field>
+        <field name="tag">it_parc.Dashboard</field>
+    </record>
+
+    <!-- Server actions pour menus rapports (nécessite des IDs pour ir.actions.report) -->
+    <record id="action_server_rapport_inventaire" model="ir.actions.server">
+        <field name="name">Imprimer inventaire complet</field>
+        <field name="model_id" ref="model_it_equipment"/>
+        <field name="state">code</field>
+        <field name="code">
+report = env.ref('it_parc.action_report_inventaire')
+records = env['it.equipment'].search([])
+action = report.report_action(records)
+</field>
+    </record>
+
+    <record id="action_server_rapport_interventions" model="ir.actions.server">
+        <field name="name">Imprimer historique interventions</field>
+        <field name="model_id" ref="model_it_intervention"/>
+        <field name="state">code</field>
+        <field name="code">
+report = env.ref('it_parc.action_report_interventions')
+records = env['it.intervention'].search([])
+action = report.report_action(records)
+</field>
+    </record>
+
+    <!-- Server actions exports Excel -->
+    <record id="action_server_export_inventaire_excel" model="ir.actions.server">
+        <field name="name">Exporter inventaire Excel</field>
+        <field name="model_id" ref="model_it_equipment"/>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_inventaire_excel()</field>
+    </record>
+
+    <record id="action_server_export_couts_excel" model="ir.actions.server">
+        <field name="name">Exporter coûts maintenance Excel</field>
+        <field name="model_id" ref="model_it_intervention"/>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_couts_maintenance_excel()</field>
+    </record>
+
+    <record id="action_server_export_contrats_excel" model="ir.actions.server">
+        <field name="name">Exporter contrats expirants Excel</field>
+        <field name="model_id" ref="model_it_contrat"/>
+        <field name="binding_model_id" ref="model_it_contrat"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_contrats_expiration_excel()</field>
+    </record>
+</odoo>

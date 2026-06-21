@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_renouvellement_form" model="ir.ui.view">
+        <field name="name">wizard.renouvellement.form</field>
+        <field name="model">wizard.renouvellement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Contrat à renouveler">
+                        <field name="contrat_id" readonly="1"/>
+                    </group>
+                    <group string="Nouveau contrat">
+                        <field name="new_date_start"/>
+                        <field name="new_date_end"/>
+                        <field name="new_amount"/>
+                    </group>
+                    <group string="Note">
+                        <field name="note" nolabel="1"
+                               placeholder="Observations sur le renouvellement..."/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" string="Confirmer le renouvellement"
+                            type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

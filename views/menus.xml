@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu racine -->
+    <menuitem id="menu_it_parc_root"
+              name="IT Parc"
+              sequence="50"
+              groups="it_parc.group_it_technicien"
+              web_icon="it_parc,static/description/icon.png"/>
+
+    <!-- Équipements -->
+    <menuitem id="menu_it_equipements"
+              name="Équipements"
+              parent="menu_it_parc_root"
+              sequence="10"/>
+
+    <menuitem id="menu_it_equipment_list"
+              name="Tous les équipements"
+              parent="menu_it_equipements"
+              action="action_it_equipment"
+              sequence="10"
+              groups="it_parc.group_it_technicien"/>
+
+    <menuitem id="menu_it_affectation"
+              name="Historique affectations"
+              parent="menu_it_equipements"
+              action="action_it_affectation"
+              sequence="20"
+              groups="it_parc.group_it_manager"/>
+
+    <menuitem id="menu_it_category"
+              name="Catégories"
+              parent="menu_it_equipements"
+              action="action_it_equipment_category"
+              sequence="30"
+              groups="it_parc.group_it_manager"/>
+
+    <!-- Maintenance -->
+    <menuitem id="menu_it_maintenance"
+              name="Maintenance"
+              parent="menu_it_parc_root"
+              sequence="20"/>
+
+    <menuitem id="menu_it_intervention"
+              name="Interventions"
+              parent="menu_it_maintenance"
+              action="action_it_intervention"
+              sequence="10"
+              groups="it_parc.group_it_technicien"/>
+
+    <!-- Contrats -->
+    <menuitem id="menu_it_contrats"
+              name="Contrats"
+              parent="menu_it_parc_root"
+              sequence="30"
+              groups="it_parc.group_it_manager"/>
+
+    <menuitem id="menu_it_contrat_list"
+              name="Contrats fournisseurs"
+              parent="menu_it_contrats"
+              action="action_it_contrat"
+              sequence="10"
+              groups="it_parc.group_it_manager"/>
+
+    <!-- Alertes -->
+    <menuitem id="menu_it_alertes_menu"
+              name="Alertes"
+              parent="menu_it_parc_root"
+              action="action_it_alerte"
+              sequence="40"
+              groups="it_parc.group_it_manager"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_it_dashboard"
+              name="Tableau de bord"
+              parent="menu_it_parc_root"
+              action="action_it_dashboard"
+              sequence="5"
+              groups="it_parc.group_it_technicien"/>
+
+    <!-- Rapports -->
+    <menuitem id="menu_it_rapports"
+              name="Rapports"
+              parent="menu_it_parc_root"
+              sequence="50"
+              groups="it_parc.group_it_manager"/>
+
+    <menuitem id="menu_it_rapport_inventaire"
+              name="Inventaire complet"
+              parent="menu_it_rapports"
+              action="action_server_rapport_inventaire"
+              sequence="10"
+              groups="it_parc.group_it_manager"/>
+
+    <menuitem id="menu_it_rapport_interventions"
+              name="Historique interventions"
+              parent="menu_it_rapports"
+              action="action_server_rapport_interventions"
+              sequence="20"
+              groups="it_parc.group_it_manager"/>
+
+    <!-- Import -->
+    <menuitem id="menu_it_import_csv"
+              name="Import CSV"
+              parent="menu_it_parc_root"
+              action="action_wizard_import_csv"
+              sequence="60"
+              groups="it_parc.group_it_manager"/>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Paramètre système : délai d'alerte en jours -->
+    <record id="param_alerte_delay" model="ir.config_parameter">
+        <field name="key">it_parc.alerte_delay_days</field>
+        <field name="value">30</field>
+    </record>
+
+    <!-- Séquence équipements -->
+    <record id="seq_it_equipment" model="ir.sequence">
+        <field name="name">Équipement IT</field>
+        <field name="code">it.equipment</field>
+        <field name="prefix">EQ/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <!-- Séquence interventions -->
+    <record id="seq_it_intervention" model="ir.sequence">
+        <field name="name">Intervention IT</field>
+        <field name="code">it.intervention</field>
+        <field name="prefix">INT/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <!-- Tâche planifiée : génération des alertes -->
+    <record id="cron_it_alertes" model="ir.cron">
+        <field name="name">IT Parc : Génération des alertes automatiques</field>
+        <field name="model_id" ref="model_it_alerte"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_alertes()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

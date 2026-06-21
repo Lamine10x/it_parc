@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_inventaire">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">Inventaire du Parc Informatique</h2>
+                    <p class="text-center text-muted">TECHPARK CI — Édité le
+                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+                    <hr/>
+
+                    <!-- Résumé -->
+                    <div class="row mb-4">
+                        <div class="col-3 text-center border p-2">
+                            <strong>Total équipements</strong><br/>
+                            <span style="font-size:20px;"><t t-esc="len(docs)"/></span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>Affectés</strong><br/>
+                            <span style="font-size:20px;">
+                                <t t-esc="len(docs.filtered(lambda e: e.state == 'assigned'))"/>
+                            </span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>En maintenance</strong><br/>
+                            <span style="font-size:20px;">
+                                <t t-esc="len(docs.filtered(lambda e: e.state == 'maintenance'))"/>
+                            </span>
+                        </div>
+                        <div class="col-3 text-center border p-2">
+                            <strong>Garanties expirées</strong><br/>
+                            <span style="font-size:20px; color:red;">
+                                <t t-esc="len(docs.filtered(lambda e: e.warranty_expired))"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tableau principal -->
+                    <table class="table table-bordered table-sm" style="font-size:9px;">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th>Réf.</th>
+                                <th>Nom</th>
+                                <th>Catégorie</th>
+                                <th>Marque</th>
+                                <th>N° série</th>
+                                <th>Employé</th>
+                                <th>Département</th>
+                                <th>Localisation</th>
+                                <th>Fin garantie</th>
+                                <th>Valeur (FCFA)</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="eq">
+                                <tr t-attf-class="#{eq.state == 'retired' and 'text-muted' or ''} #{eq.warranty_expired and 'table-danger' or ''}">
+                                    <td><t t-esc="eq.reference"/></td>
+                                    <td><t t-esc="eq.name"/></td>
+                                    <td><t t-esc="eq.category_id.name"/></td>
+                                    <td><t t-esc="eq.brand or '—'"/></td>
+                                    <td><t t-esc="eq.serial_number or '—'"/></td>
+                                    <td><t t-esc="eq.employee_id.name or '—'"/></td>
+                                    <td><t t-esc="eq.department_id.name or '—'"/></td>
+                                    <td><t t-esc="eq.location or '—'"/></td>
+                                    <td><t t-esc="eq.warranty_date or '—'"/></td>
+                                    <td class="text-right"><t t-esc="'%d' % eq.purchase_value"/></td>
+                                    <td><t t-esc="dict(eq._fields['state'].selection).get(eq.state)"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="9"><strong>Valeur totale du parc</strong></td>
+                                <td class="text-right">
+                                    <strong><t t-esc="'%d' % sum(docs.mapped('purchase_value'))"/> FCFA</strong>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_contrat_form" model="ir.ui.view">
+        <field name="name">it.contrat.form</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_renouvellement_wizard"
+                            string="Renouveler" type="object"
+                            class="btn-primary"
+                            invisible="state not in ['active', 'expired']"
+                            groups="it_parc.group_it_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,expired,renewed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="type"/>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="remaining_days"
+                                   decoration-danger="remaining_days &lt; 0"
+                                   decoration-warning="remaining_days &lt; 30"/>
+                        </group>
+                    </group>
+                    <group string="Équipements couverts">
+                        <field name="equipment_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_contrat_list" model="ir.ui.view">
+        <field name="name">it.contrat.list</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="is_expired == True"
+                  decoration-warning="remaining_days &lt; 30 and remaining_days &gt;= 0">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="partner_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="remaining_days"/>
+                <field name="amount"/>
+                <field name="is_expired" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state == 'expired'"
+                       decoration-info="state == 'renewed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_contrat_search" model="ir.ui.view">
+        <field name="name">it.contrat.search</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter string="Actifs" name="active" domain="[('state','=','active')]"/>
+                <filter string="Expirés" name="expired"
+                        domain="[('date_end','&lt;',context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Expirant dans 60j" name="expiring_60"
+                        domain="[('date_end','&gt;=',context_today().strftime('%Y-%m-%d')),('date_end','&lt;=',(context_today()+datetime.timedelta(days=60)).strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_contrat" model="ir.actions.act_window">
+        <field name="name">Contrats fournisseurs</field>
+        <field name="res_model">it.contrat</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_contrat_search"/>
+    </record>
+</odoo>

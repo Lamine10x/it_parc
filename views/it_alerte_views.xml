@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_alerte_list" model="ir.ui.view">
+        <field name="name">it.alerte.list</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="remaining_days &lt; 0"
+                  decoration-warning="remaining_days &lt; 15 and remaining_days &gt;= 0">
+                <field name="name"/>
+                <field name="type" widget="badge"/>
+                <field name="equipment_id"/>
+                <field name="contrat_id"/>
+                <field name="date_echeance"/>
+                <field name="remaining_days"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'open'"
+                       decoration-info="state == 'acknowledged'"
+                       decoration-success="state == 'closed'"/>
+                <button name="action_acknowledge" string="Prendre en compte"
+                        type="object" icon="fa-check"
+                        invisible="state != 'open'"
+                        groups="it_parc.group_it_manager"/>
+                <button name="action_close" string="Fermer"
+                        type="object" icon="fa-times"
+                        invisible="state == 'closed'"
+                        groups="it_parc.group_it_manager"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_alerte_form" model="ir.ui.view">
+        <field name="name">it.alerte.form</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_acknowledge" string="Prendre en compte"
+                            type="object" class="btn-primary"
+                            invisible="state != 'open'"
+                            groups="it_parc.group_it_manager"/>
+                    <button name="action_close" string="Fermer"
+                            type="object"
+                            invisible="state == 'closed'"
+                            groups="it_parc.group_it_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="equipment_id"/>
+                        <field name="contrat_id"/>
+                        <field name="date_echeance"/>
+                        <field name="remaining_days"
+                               decoration-danger="remaining_days &lt; 0"
+                               decoration-warning="remaining_days &lt; 15"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_alerte_search" model="ir.ui.view">
+        <field name="name">it.alerte.search</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="Ouvertes" name="open" domain="[('state','=','open')]"/>
+                <filter string="Garanties" name="warranty" domain="[('type','=','warranty')]"/>
+                <filter string="Contrats" name="contrat" domain="[('type','=','contrat')]"/>
+                <filter string="Urgentes (&lt;15j)" name="urgent"
+                        domain="[('date_echeance','&lt;',(context_today()+datetime.timedelta(days=15)).strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_alerte" model="ir.actions.act_window">
+        <field name="name">Alertes</field>
+        <field name="res_model">it.alerte</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_alerte_search"/>
+        <field name="domain">[('state', '!=', 'closed')]</field>
+    </record>
+</odoo>

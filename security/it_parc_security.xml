@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Catégorie de module -->
+    <record id="module_category_it_parc" model="ir.module.category">
+        <field name="name">IT Parc</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Groupe IT Technicien -->
+    <record id="group_it_technicien" model="res.groups">
+        <field name="name">IT Technicien</field>
+        <field name="category_id" ref="module_category_it_parc"/>
+        <field name="comment">Lecture + création d'interventions</field>
+    </record>
+
+    <!-- Groupe IT Manager -->
+    <record id="group_it_manager" model="res.groups">
+        <field name="name">IT Manager</field>
+        <field name="category_id" ref="module_category_it_parc"/>
+        <field name="implied_ids" eval="[(4, ref('group_it_technicien'))]"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="comment">Accès complet au module IT Parc</field>
+    </record>
+
+    <!-- Règles d'accès enregistrements — Technicien : lecture seule équipements -->
+    <record id="rule_equipment_technicien" model="ir.rule">
+        <field name="name">Équipements - Technicien : lecture globale</field>
+        <field name="model_id" ref="model_it_equipment"/>
+        <field name="groups" eval="[(4, ref('group_it_technicien'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_equipment_manager" model="ir.rule">
+        <field name="name">Équipements - Manager : accès complet</field>
+        <field name="model_id" ref="model_it_equipment"/>
+        <field name="groups" eval="[(4, ref('group_it_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

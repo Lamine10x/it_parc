@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="it_parc.Dashboard">
+        <div class="it_parc_dashboard o_action">
+
+            <!-- En-tête -->
+            <div class="it_dashboard_header">
+                <h2>
+                    <i class="fa fa-desktop me-2"/>
+                    Tableau de bord — Parc Informatique
+                </h2>
+                <span class="it_dashboard_subtitle">TECHPARK CI</span>
+            </div>
+
+            <!-- État de chargement -->
+            <div t-if="state.loading" class="it_dashboard_loading">
+                <i class="fa fa-spinner fa-spin fa-2x"/>
+                <p>Chargement des données...</p>
+            </div>
+
+            <div t-else="">
+                <!-- KPIs - ligne 1 -->
+                <div class="it_kpi_row">
+                    <div class="it_kpi_card it_kpi_primary">
+                        <div class="it_kpi_icon"><i class="fa fa-desktop"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.total_equipments"/></div>
+                            <div class="it_kpi_label">Total équipements</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_success">
+                        <div class="it_kpi_icon"><i class="fa fa-check-circle"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.assigned"/></div>
+                            <div class="it_kpi_label">Affectés</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_warning">
+                        <div class="it_kpi_icon"><i class="fa fa-wrench"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.in_maintenance"/></div>
+                            <div class="it_kpi_label">En maintenance</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_danger">
+                        <div class="it_kpi_icon"><i class="fa fa-exclamation-triangle"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.warranty_expired"/></div>
+                            <div class="it_kpi_label">Garanties expirées</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPIs - ligne 2 -->
+                <div class="it_kpi_row">
+                    <div class="it_kpi_card it_kpi_alert">
+                        <div class="it_kpi_icon"><i class="fa fa-bell"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.open_alerts"/></div>
+                            <div class="it_kpi_label">Alertes ouvertes</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_info">
+                        <div class="it_kpi_icon"><i class="fa fa-file-text"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.expiring_contrats"/></div>
+                            <div class="it_kpi_label">Contrats expirant (60j)</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_cost">
+                        <div class="it_kpi_icon"><i class="fa fa-money"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value">
+                                <t t-esc="formatNumber(state.data.kpis.total_maintenance_cost)"/>
+                            </div>
+                            <div class="it_kpi_label">Coût maintenance (FCFA)</div>
+                        </div>
+                    </div>
+                    <div class="it_kpi_card it_kpi_hours">
+                        <div class="it_kpi_icon"><i class="fa fa-clock-o"/></div>
+                        <div class="it_kpi_content">
+                            <div class="it_kpi_value"><t t-esc="state.data.kpis.total_maintenance_hours"/> h</div>
+                            <div class="it_kpi_label">Heures de maintenance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphiques -->
+                <div class="it_charts_row">
+                    <!-- Graphique en barres : interventions par mois -->
+                    <div class="it_chart_card">
+                        <h4><i class="fa fa-bar-chart me-2"/>Interventions par mois (6 derniers mois)</h4>
+                        <div class="it_bar_chart">
+                            <t t-set="maxVal" t-value="Math.max(...state.data.monthly_interventions.map(m => m.count), 1)"/>
+                            <t t-foreach="state.data.monthly_interventions" t-as="month" t-key="month.label">
+                                <div class="it_bar_group">
+                                    <div class="it_bar_wrapper">
+                                        <div class="it_bar_value" t-if="month.count > 0">
+                                            <t t-esc="month.count"/>
+                                        </div>
+                                        <div class="it_bar"
+                                             t-attf-style="height: #{Math.round((month.count / maxVal) * 100)}%; background: #2E4057;">
+                                        </div>
+                                    </div>
+                                    <div class="it_bar_label"><t t-esc="month.label"/></div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Distribution par état (barres horizontales) -->
+                    <div class="it_chart_card">
+                        <h4><i class="fa fa-pie-chart me-2"/>Distribution par état</h4>
+                        <div class="it_state_chart">
+                            <t t-set="totalEq" t-value="state.data.kpis.total_equipments || 1"/>
+                            <t t-foreach="state.data.state_chart" t-as="item" t-key="item.label">
+                                <div class="it_state_row">
+                                    <div class="it_state_label"><t t-esc="item.label"/></div>
+                                    <div class="it_state_bar_wrap">
+                                        <div class="it_state_bar"
+                                             t-attf-style="width: #{Math.round((item.value / totalEq) * 100)}%; background: #{item.color};">
+                                        </div>
+                                    </div>
+                                    <div class="it_state_count">
+                                        <t t-esc="item.value"/>
+                                        (<t t-esc="Math.round((item.value / totalEq) * 100)"/>%)
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 5 coûts maintenance -->
+                <div class="it_top5_card" t-if="state.data.top5_costs.length">
+                    <h4><i class="fa fa-trophy me-2"/>Top 5 équipements par coût de maintenance</h4>
+                    <table class="it_top5_table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Équipement</th>
+                                <th>Coût total (FCFA)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="state.data.top5_costs" t-as="item" t-key="item.name">
+                                <tr>
+                                    <td><t t-esc="item_index + 1"/></td>
+                                    <td><t t-esc="item.name"/></td>
+                                    <td class="it_cost_cell"><t t-esc="formatNumber(item.cost)"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
