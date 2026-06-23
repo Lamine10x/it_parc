@@ -9,6 +9,7 @@ class ItParcDashboard extends Component {
 
     setup() {
         this.orm = useService("orm");
+        this.action = useService("action");
         this.state = useState({
             loading: true,
             data: {
@@ -37,6 +38,67 @@ class ItParcDashboard extends Component {
         } finally {
             this.state.loading = false;
         }
+    }
+
+    onKpiClick(type) {
+        let domain = [];
+        let resModel = "it.equipment";
+        let name = "Équipements";
+        let context = {};
+        
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        switch (type) {
+            case 'total_equipments':
+                name = "Tous les équipements";
+                break;
+            case 'assigned':
+                name = "Équipements affectés";
+                domain = [["state", "=", "assigned"]];
+                break;
+            case 'in_maintenance':
+                name = "Équipements en maintenance";
+                domain = [["state", "=", "maintenance"]];
+                break;
+            case 'warranty_expired':
+                name = "Garanties expirées";
+                domain = [["warranty_date", "<", todayStr]];
+                break;
+            case 'open_alerts':
+                resModel = "it.alerte";
+                name = "Alertes ouvertes";
+                domain = [["state", "=", "open"]];
+                break;
+            case 'expiring_contrats':
+                resModel = "it.contrat";
+                name = "Contrats expirant sous 60 jours";
+                const limitDate = new Date();
+                limitDate.setDate(limitDate.getDate() + 60);
+                const limitStr = limitDate.toISOString().split('T')[0];
+                domain = [
+                    ["date_end", ">=", todayStr],
+                    ["date_end", "<=", limitStr],
+                    ["state", "=", "active"]
+                ];
+                break;
+            case 'total_maintenance_cost':
+            case 'total_maintenance_hours':
+                resModel = "it.intervention";
+                name = "Interventions terminées";
+                domain = [["state", "=", "done"]];
+                break;
+            default:
+                return;
+        }
+
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: name,
+            res_model: resModel,
+            views: [[false, "list"], [false, "form"]],
+            domain: domain,
+            context: context,
+        });
     }
 
     formatNumber(value) {

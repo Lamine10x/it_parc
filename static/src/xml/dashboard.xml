@@ -21,28 +21,28 @@
             <div t-else="">
                 <!-- KPIs - ligne 1 -->
                 <div class="it_kpi_row">
-                    <div class="it_kpi_card it_kpi_primary">
+                    <div class="it_kpi_card it_kpi_primary" t-on-click="() => this.onKpiClick('total_equipments')">
                         <div class="it_kpi_icon"><i class="fa fa-desktop"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.total_equipments"/></div>
                             <div class="it_kpi_label">Total équipements</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_success">
+                    <div class="it_kpi_card it_kpi_success" t-on-click="() => this.onKpiClick('assigned')">
                         <div class="it_kpi_icon"><i class="fa fa-check-circle"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.assigned"/></div>
                             <div class="it_kpi_label">Affectés</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_warning">
+                    <div class="it_kpi_card it_kpi_warning" t-on-click="() => this.onKpiClick('in_maintenance')">
                         <div class="it_kpi_icon"><i class="fa fa-wrench"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.in_maintenance"/></div>
                             <div class="it_kpi_label">En maintenance</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_danger">
+                    <div class="it_kpi_card it_kpi_danger" t-on-click="() => this.onKpiClick('warranty_expired')">
                         <div class="it_kpi_icon"><i class="fa fa-exclamation-triangle"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.warranty_expired"/></div>
@@ -53,21 +53,21 @@
 
                 <!-- KPIs - ligne 2 -->
                 <div class="it_kpi_row">
-                    <div class="it_kpi_card it_kpi_alert">
+                    <div class="it_kpi_card it_kpi_alert" t-on-click="() => this.onKpiClick('open_alerts')">
                         <div class="it_kpi_icon"><i class="fa fa-bell"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.open_alerts"/></div>
                             <div class="it_kpi_label">Alertes ouvertes</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_info">
+                    <div class="it_kpi_card it_kpi_info" t-on-click="() => this.onKpiClick('expiring_contrats')">
                         <div class="it_kpi_icon"><i class="fa fa-file-text"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.expiring_contrats"/></div>
                             <div class="it_kpi_label">Contrats expirant (60j)</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_cost">
+                    <div class="it_kpi_card it_kpi_cost" t-on-click="() => this.onKpiClick('total_maintenance_cost')">
                         <div class="it_kpi_icon"><i class="fa fa-money"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value">
@@ -76,7 +76,7 @@
                             <div class="it_kpi_label">Coût maintenance (FCFA)</div>
                         </div>
                     </div>
-                    <div class="it_kpi_card it_kpi_hours">
+                    <div class="it_kpi_card it_kpi_hours" t-on-click="() => this.onKpiClick('total_maintenance_hours')">
                         <div class="it_kpi_icon"><i class="fa fa-clock-o"/></div>
                         <div class="it_kpi_content">
                             <div class="it_kpi_value"><t t-esc="state.data.kpis.total_maintenance_hours"/> h</div>
