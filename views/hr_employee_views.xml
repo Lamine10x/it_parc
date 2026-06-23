@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_it_parc" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.it.parc</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_it_equipments" type="object"
+                        class="oe_stat_button" icon="fa-desktop"
+                        groups="it_parc.group_it_technicien">
+                    <field name="equipment_count" widget="statinfo"
+                           string="Équipements IT"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>
