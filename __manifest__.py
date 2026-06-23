@@ -40,6 +40,8 @@
         'report/report_inventaire.xml',
         'report/report_interventions.xml',
         'views/menus.xml',
+        'views/hr_employee_views.xml',
+        'views/res_partner_views.xml',
     ],
     'demo': [
         'data/it_parc_demo.xml',

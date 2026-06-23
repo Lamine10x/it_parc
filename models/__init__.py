@@ -5,3 +5,5 @@ from . import it_contrat
 from . import it_alerte
 from . import it_export
 from . import it_dashboard
+from . import hr_employee
+from . import res_partner
