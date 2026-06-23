@@ -15,6 +15,13 @@
                            statusbar_visible="active,expired,renewed"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_equipments" type="object"
+                                class="oe_stat_button" icon="fa-desktop">
+                            <field name="equipment_count" widget="statinfo"
+                                   string="Équipements"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
                     </div>

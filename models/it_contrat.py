@@ -27,6 +27,8 @@ class ItContrat(models.Model):
                                     string='Jours restants', store=False)
     is_expired = fields.Boolean(compute='_compute_remaining',
                                 string='Expiré', store=False)
+    equipment_count = fields.Integer(compute='_compute_equipment_count',
+                                     string='Équipements couverts')
     state = fields.Selection([
         ('active', 'Actif'),
         ('expired', 'Expiré'),
@@ -45,6 +47,21 @@ class ItContrat(models.Model):
             else:
                 rec.remaining_days = 0
                 rec.is_expired = False
+
+    @api.depends('equipment_ids')
+    def _compute_equipment_count(self):
+        for rec in self:
+            rec.equipment_count = len(rec.equipment_ids)
+
+    def action_view_equipments(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Équipements couverts',
+            'res_model': 'it.equipment',
+            'view_mode': 'list,kanban,form',
+            'domain': [('id', 'in', self.equipment_ids.ids)],
+            'context': {'default_contrat_ids': [(4, self.id)]},
+        }
 
     def action_open_renouvellement_wizard(self):
         return {
