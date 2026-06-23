@@ -44,17 +44,19 @@ class ItEquipment(models.Model):
 
     affectation_count = fields.Integer(compute='_compute_counts')
     intervention_count = fields.Integer(compute='_compute_counts')
+    contrat_count = fields.Integer(compute='_compute_counts')
     warranty_remaining_days = fields.Integer(compute='_compute_warranty_days',
                                              string='Jours garantie restants',
                                              store=False)
     warranty_expired = fields.Boolean(compute='_compute_warranty_days',
                                       string='Garantie expirée')
 
-    @api.depends('affectation_ids', 'intervention_ids')
+    @api.depends('affectation_ids', 'intervention_ids', 'contrat_ids')
     def _compute_counts(self):
         for rec in self:
             rec.affectation_count = len(rec.affectation_ids)
             rec.intervention_count = len(rec.intervention_ids)
+            rec.contrat_count = len(rec.contrat_ids)
 
     @api.depends('warranty_date')
     def _compute_warranty_days(self):
@@ -115,6 +117,16 @@ class ItEquipment(models.Model):
             'view_mode': 'list,form',
             'domain': [('equipment_id', '=', self.id)],
             'context': {'default_equipment_id': self.id},
+        }
+
+    def action_view_contrats(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contrats',
+            'res_model': 'it.contrat',
+            'view_mode': 'list,form',
+            'domain': [('id', 'in', self.contrat_ids.ids)],
+            'context': {'default_equipment_ids': [(4, self.id)]},
         }
 
     def action_open_reaffectation_wizard(self):
